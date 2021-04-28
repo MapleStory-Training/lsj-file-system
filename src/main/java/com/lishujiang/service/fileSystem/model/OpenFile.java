@@ -13,18 +13,6 @@ public class OpenFile {
 	public void setFlag(int flag) {
 		this.flag = flag;
 	}
-//	public Pointer getRead() {
-//		return read;
-//	}
-//	public void setRead(Pointer read) {
-//		this.read = read;
-//	}
-//	public Pointer getWrite() {
-//		return write;
-//	}
-//	public void setWrite(Pointer write) {
-//		this.write = write;
-//	}
 	public File getFile() {
 		return file;
 	}

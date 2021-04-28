@@ -36,7 +36,7 @@ public class RAFTestFactory {
         public static void main(String[] args) throws IOException {
 
 //            RandomAccessFile raf = RAFTestFactory.getRAFWithModelR();
-            String fdts = RAFTestFactory.read(4096,4222);
+            String fdts = RAFTestFactory.read(4096, 4222);
             System.out.println(fdts);
 //            System.out.println("raf.length()->获取文本内容长度:" + raf.length());
 //            System.out.println("raf.getFilePointer()->获取文本头指针:" + raf.getFilePointer());
@@ -45,6 +45,7 @@ public class RAFTestFactory {
         }
 
     }
+
     public static class RAFTestMain2 {
         public static void main(String[] args) throws IOException {
             RandomAccessFile raf = RAFTestFactory.getRAFWithModelRW();
@@ -84,28 +85,28 @@ public class RAFTestFactory {
             String s5 = "第五个字符串";
 
             // 利用多线程同时写入一个文件
-            new FileWriteThread(0*1,s1.getBytes()).start(); // 从文件的1024字节之后开始写入数据
-            new FileWriteThread(6,s2.getBytes()).start(); // 从文件的2048字节之后开始写入数据
-            new FileWriteThread(1024*3,s3.getBytes()).start(); // 从文件的3072字节之后开始写入数据
-            new FileWriteThread(1024*4,s4.getBytes()).start(); // 从文件的4096字节之后开始写入数据
-            new FileWriteThread(1024*5,s5.getBytes()).start(); // 从文件的5120字节之后开始写入数据
+            new FileWriteThread(0 * 1, s1.getBytes()).start(); // 从文件的1024字节之后开始写入数据
+            new FileWriteThread(6, s2.getBytes()).start(); // 从文件的2048字节之后开始写入数据
+            new FileWriteThread(1024 * 3, s3.getBytes()).start(); // 从文件的3072字节之后开始写入数据
+            new FileWriteThread(1024 * 4, s4.getBytes()).start(); // 从文件的4096字节之后开始写入数据
+            new FileWriteThread(1024 * 5, s5.getBytes()).start(); // 从文件的5120字节之后开始写入数据
         }
     }
 
     /**
      * 利用线程在文件的指定位置写入指定数据
      */
-    public static class FileWriteThread extends Thread{
+    public static class FileWriteThread extends Thread {
         private int skip;
         private byte[] content;
 
-        public FileWriteThread(int skip,byte[] content){
+        public FileWriteThread(int skip, byte[] content) {
             this.skip = skip;
             this.content = content;
         }
 
         @Override
-        public void run(){
+        public void run() {
             RandomAccessFile raf = null;
             try {
                 raf = RAFTestFactory.getRAFWithModelRW();
@@ -146,14 +147,14 @@ public class RAFTestFactory {
             RandomAccessFile r = RAFTestFactory.getRAFWithModelRW();
             r.setLength(size);
             r.close();
-            System.out.println("磁盘文件初始化完成，文件名：fat.dat");
+            System.out.println("磁盘文件初始化完成");
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("磁盘文件初始化异常：" + e);
         }
     }
 
-    public static void write(int skip,byte[] content){
+    public static void write(int skip, byte[] content) {
         try {
             RandomAccessFile raf = new RandomAccessFile("wenjian.txt", "rw");
             raf.seek(skip);
@@ -168,6 +169,7 @@ public class RAFTestFactory {
 
     /**
      * 利用RandomAccessFile定位到指定偏移量后再读文件
+     *
      * @param offset
      * @param len
      * @return
@@ -180,12 +182,12 @@ public class RAFTestFactory {
             raf.read(bytes);
             String str = "\\u0000";
             String rep = new String(bytes);
-            rep = rep.replaceAll(str,"");
+            rep = rep.replaceAll(str, "");
             return rep;
         } catch (IOException e) {
             e.printStackTrace();
         }
-       return null;
+        return null;
     }
 
     public static void main(String[] args) throws IOException {
@@ -201,11 +203,11 @@ public class RAFTestFactory {
 //        write(0,"asdfghjkl".getBytes());
 //        write(4096,"rrrrrrrr".getBytes());
 ////        write(8092,"{\"childNodes\":[{\"diskPosition\":2,\"nodeEntity\":{\"content\":\"\",\"createTime\":\"2021年04月28日  09:46:19\",\"diskNum\":2,\"fileName\":\"file\",\"length\":0,\"location\":\"root\",\"property\":1,\"readOnly\":false,\"size\":\"8\",\"type\":\"File\"},\"parentNode\":{\"$ref\":\"$\"},\"type\":2}],\"diskPosition\":1,\"nodeEntity\":{\"createTime\":1619574374367,\"diskNum\":255,\"folderName\":\"root\",\"hasChild\":false,\"location\":\"root\",\"numOfFAT\":0,\"type\":\"Folder\"},\"type\":1}".getBytes());
-        write(8092,"gggggggg".getBytes());
-        String s = read(0,4096);
-        String s2 = read(0,8092);
-        String s3 = read(0,12000);
-        String s4 = read(4096,3000);
+        write(8092, "gggggggg".getBytes());
+        String s = read(0, 4096);
+        String s2 = read(0, 8092);
+        String s3 = read(0, 12000);
+        String s4 = read(4096, 3000);
     }
 
     public static class BigFileTester {
@@ -222,8 +224,8 @@ public class RAFTestFactory {
         }
 
     }
-    public static class Offset {
 
+    public static class Offset {
 
 
         public static void main(String[] args) {
@@ -274,8 +276,8 @@ public class RAFTestFactory {
     /**
      * RandomAccessFile是属于随机读取类，是可以对文件本身的内容直接随机进行操作的，就是说可以指定位置
      * 的读取和写入内容
-     * @author andy
      *
+     * @author andy
      */
     public static class RandomAccessFileTest {
 
@@ -302,7 +304,7 @@ public class RAFTestFactory {
             double doubleValue = raf.readDouble();
             raf.seek(0);//设置指针的位置为文件的开始部分
             byte[] bytes = new byte[12];
-            for (int i=0; i<bytes.length; i++) {
+            for (int i = 0; i < bytes.length; i++) {
                 bytes[i] = raf.readByte();//每次读一个字节，并把它赋值给字节bytes[i]
             }
             String stringValue = new String(bytes);
@@ -315,7 +317,6 @@ public class RAFTestFactory {
             System.out.println(stringValue);
             System.out.println(intValue2);
         }
-
 
 
     }

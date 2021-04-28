@@ -15,7 +15,7 @@ import java.util.List;
  * @date: 2021/04/22 09:56
  **/
 @Data
-public class FdtNode <T> implements Serializable {
+public class FdtNode<T> implements Serializable {
     /**
      * 当前节点的父节点
      */
@@ -39,24 +39,25 @@ public class FdtNode <T> implements Serializable {
 
     private Integer length;
 
-    public FdtNode (T nodeEntity, Integer diskPosition ,Integer type){
-        this.nodeEntity=nodeEntity;
+    public FdtNode(T nodeEntity, Integer diskPosition, Integer type) {
+        this.nodeEntity = nodeEntity;
         this.diskPosition = diskPosition;
         this.type = type;
     }
 
-    public FdtNode (){}
+    public FdtNode() {
+    }
 
-    public void addChildNode(FdtNode childNode){
+    public void addChildNode(FdtNode childNode) {
         childNode.setParentNode(this);
-        if ( this.childNodes==null){
+        if (this.childNodes == null) {
             this.childNodes = new ArrayList<FdtNode>();
         }
         this.childNodes.add(childNode);
     }
 
-    public void removeChildNode(FdtNode childNode){
-        if (this.childNodes!=null){
+    public void removeChildNode(FdtNode childNode) {
+        if (this.childNodes != null) {
             this.childNodes.remove(childNode);
         }
     }
@@ -85,26 +86,26 @@ public class FdtNode <T> implements Serializable {
         this.childNodes = childNodes;
     }
 
-    public static <T> void printNodeTree(FdtNode<T> node){
-        for (FdtNode<T> childNode: node.getChildNodes()) {
+    public static <T> void printNodeTree(FdtNode<T> node) {
+        for (FdtNode<T> childNode : node.getChildNodes()) {
             System.out.println(childNode.getNodeEntity().toString());
-            if (childNode.getChildNodes()!=null){
+            if (childNode.getChildNodes() != null) {
                 printNodeTree(childNode);
             }
         }
     }
 
-    public static <T> FdtNode searchNodeTree(FdtNode<T> root,FdtNode current, String filename) {
+    public static <T> FdtNode searchNodeTree(FdtNode<T> root, FdtNode current, String filename) {
         Folder rootFolder = (Folder) root.nodeEntity;
         if (rootFolder.getFolderName().equals(filename)) {
             return root;
         }
-        if (CollectionUtils.isEmpty(root.getChildNodes())){
+        if (CollectionUtils.isEmpty(root.getChildNodes())) {
             return null;
         }
         FdtNode fdtNode;
         for (FdtNode childNode : root.getChildNodes()) {
-            if (childNode.getType() != 1){
+            if (childNode.getType() != 1) {
                 continue;
             }
             System.out.println(childNode.getNodeEntity().toString());
@@ -113,23 +114,23 @@ public class FdtNode <T> implements Serializable {
                 current = childNode;
             }
             if (childNode.getChildNodes() != null) {
-                current = searchNodeTree(childNode,current, filename);
+                current = searchNodeTree(childNode, current, filename);
             }
 
         }
         return current;
     }
 
-    public static <T> FdtNode searchFileNodeTree(FdtNode<T> root,FdtNode current, String filename) {
-        if (CollectionUtils.isEmpty(root.getChildNodes())){
+    public static <T> FdtNode searchFileNodeTree(FdtNode<T> root, FdtNode current, String filename) {
+        if (CollectionUtils.isEmpty(root.getChildNodes())) {
             return null;
         }
         FdtNode fdtNode;
         for (FdtNode childNode : root.getChildNodes()) {
-            if (childNode.getType() == 1){
+            if (childNode.getType() == 1) {
                 if (childNode.getChildNodes() != null) {
-                    current = searchFileNodeTree(childNode,current, filename);
-                    if (current != null && current.getNodeEntity() != null){
+                    current = searchFileNodeTree(childNode, current, filename);
+                    if (current != null && current.getNodeEntity() != null) {
                         break;
                     }
                 }
@@ -143,32 +144,36 @@ public class FdtNode <T> implements Serializable {
         return current;
     }
 
-    public static <T> FdtNode transFileNodeTree(FdtNode<T> node,FdtNode rootFdt) {
+    public static <T> FdtNode transFileNodeTree(FdtNode<T> node, FdtNode rootFdt) {
 
-        if (node.getType() == 1){
-            node = (FdtNode<T>) JSON.parseObject(JSON.toJSONString(node),new TypeReference<FdtNode<Folder>>(){});
-        }else {
-            node = (FdtNode<T>) JSON.parseObject(JSON.toJSONString(node),new TypeReference<FdtNode<File>>(){});
+        if (node.getType() == 1) {
+            node = (FdtNode<T>) JSON.parseObject(JSON.toJSONString(node), new TypeReference<FdtNode<Folder>>() {
+            });
+        } else {
+            node = (FdtNode<T>) JSON.parseObject(JSON.toJSONString(node), new TypeReference<FdtNode<File>>() {
+            });
         }
-        if (CollectionUtils.isEmpty(node.getChildNodes())){
+        if (CollectionUtils.isEmpty(node.getChildNodes())) {
             return node;
         }
         for (FdtNode childNode : node.getChildNodes()) {
             FdtNode newChildNode = null;
-            if (childNode.getType() == 1){
-                newChildNode = JSON.parseObject(JSON.toJSONString(childNode),new TypeReference<FdtNode<Folder>>(){});
+            if (childNode.getType() == 1) {
+                newChildNode = JSON.parseObject(JSON.toJSONString(childNode), new TypeReference<FdtNode<Folder>>() {
+                });
                 newChildNode.setChildNodes(null);
                 newChildNode.setParentNode(null);
                 rootFdt.addChildNode(newChildNode);
             }
-            if (childNode.getType() == 2){
-                newChildNode = childNode = JSON.parseObject(JSON.toJSONString(childNode),new TypeReference<FdtNode<File>>(){});
+            if (childNode.getType() == 2) {
+                newChildNode = childNode = JSON.parseObject(JSON.toJSONString(childNode), new TypeReference<FdtNode<File>>() {
+                });
                 newChildNode.setChildNodes(null);
                 newChildNode.setParentNode(null);
                 rootFdt.addChildNode(newChildNode);
             }
             if (childNode.getChildNodes() != null) {
-                transFileNodeTree(childNode,newChildNode);
+                transFileNodeTree(childNode, newChildNode);
             }
         }
         return rootFdt;
@@ -176,18 +181,18 @@ public class FdtNode <T> implements Serializable {
 
 
     public static <T> Integer findNodeType(FdtNode<T> root, String filename) {
-        if (CollectionUtils.isEmpty(root.getChildNodes())){
+        if (CollectionUtils.isEmpty(root.getChildNodes())) {
             return -1;
         }
         FdtNode fdtNode;
         Integer type = 0;
         for (FdtNode childNode : root.getChildNodes()) {
-            if (childNode.getType() == 1){
+            if (childNode.getType() == 1) {
                 Folder folder = (Folder) childNode.getNodeEntity();
                 if (folder.getFolderName().equals(filename)) {
                     return childNode.getType();
                 }
-            }else {
+            } else {
                 File file = (File) childNode.getNodeEntity();
                 if (filename.equals(file.getFileName())) {
                     return childNode.getType();
@@ -201,22 +206,22 @@ public class FdtNode <T> implements Serializable {
     }
 
     public static <T> void printOutNodeTree(FdtNode<T> node) {
-        if (node.getType() != 1){
+        if (node.getType() != 1) {
             System.out.println("当前节点不是文件夹");
             return;
         }
         Folder rootFolder = (Folder) node.nodeEntity;
-        if (CollectionUtils.isEmpty(node.getChildNodes())){
-            System.out.println("当前位置："+rootFolder.getLocation()+",当前文件夹下无内容");
+        if (CollectionUtils.isEmpty(node.getChildNodes())) {
+            System.out.println("当前位置：" + rootFolder.getLocation() + ",当前文件夹下无内容");
             return;
         }
         for (FdtNode childNode : node.getChildNodes()) {
-            if (childNode.getType() ==1){
+            if (childNode.getType() == 1) {
                 Folder childFolder = (Folder) childNode.nodeEntity;
-                System.out.println("当前位置："+rootFolder.getLocation()+"包含：文件夹："+childFolder.getFolderName());
-            }else {
+                System.out.println("当前位置：" + rootFolder.getLocation() + "包含：文件夹：" + childFolder.getFolderName());
+            } else {
                 File file = (File) childNode.nodeEntity;
-                System.out.println("当前位置："+rootFolder.getLocation()+"包含：文件"+file.getFileName());
+                System.out.println("当前位置：" + rootFolder.getLocation() + "包含：文件" + file.getFileName());
             }
         }
     }

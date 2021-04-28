@@ -13,12 +13,12 @@ import java.util.Date;
 public class FileModel {
 
     private String fileName; //文件名或目录名
-    private	String type; //文件类型:用来识别是文件还是目录
+    private String type; //文件类型:用来识别是文件还是目录
     /**
      * 当前节点在FAT磁盘块中的起始位置
      */
     private Integer diskPosition;
-    private int size;	//文件的大小
+    private int size;    //文件的大小
     private String location; //位置
     private int diskNum;
     private Date createTime; //创建时间
@@ -46,6 +46,6 @@ public class FileModel {
         this.isReadOnly = false;
         this.length = 0;
         this.content = "";
-        this.property=1;
+        this.property = 1;
     }
 }

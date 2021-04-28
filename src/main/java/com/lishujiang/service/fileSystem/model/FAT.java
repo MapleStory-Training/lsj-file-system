@@ -1,7 +1,5 @@
 package com.lishujiang.service.fileSystem.model;
 
-import org.springframework.beans.FatalBeanException;
-
 public class FAT<T> {
 
     /**
@@ -14,17 +12,17 @@ public class FAT<T> {
      */
     private int type;
 
-	/**
-	 * 文件占用磁盘块起始起始位置和FDT节点相关联（多个磁盘块的起始位置一样代表一个文件占用多个磁盘块）
-	 */
-	private Integer diskPosition;
+    /**
+     * 文件占用磁盘块起始起始位置和FDT节点相关联（多个磁盘块的起始位置一样代表一个文件占用多个磁盘块）
+     */
+    private Integer diskPosition;
 
     /**
      * File或Folder
      */
     private T object;
 
-    public FAT(){
+    public FAT() {
 
     }
 
@@ -35,13 +33,13 @@ public class FAT<T> {
         this.object = object;
     }
 
-	public FAT(int index, int type,Integer diskPosition, T object) {
-		super();
-		this.index = index;
-		this.type = type;
-		this.object = object;
-		this.diskPosition = diskPosition;
-	}
+    public FAT(int index, int type, Integer diskPosition, T object) {
+        super();
+        this.index = index;
+        this.type = type;
+        this.object = object;
+        this.diskPosition = diskPosition;
+    }
 
 
     public int getIndex() {
