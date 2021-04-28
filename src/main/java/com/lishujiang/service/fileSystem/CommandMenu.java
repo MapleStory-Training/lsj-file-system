@@ -212,16 +212,14 @@ public class CommandMenu {
     }
 
 
-    public static class testFileSystem {
-        public static void main(String[] args) {
-            try {
-                RAFTestFactory.diskInit();
-                CommandMenu commandMenu = new CommandMenu();
-                commandMenu.initService();
-                commandMenu.meun();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    public static void main(String[] args) {
+        try {
+            RAFTestFactory.diskInit();
+            CommandMenu commandMenu = new CommandMenu();
+            commandMenu.initService();
+            commandMenu.meun();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
