@@ -50,7 +50,7 @@ public class FATService {
     }
 
     public void initFAT() {
-        myFAT = new FAT[65536];
+        myFAT = new FAT[128];
 
         String fats = RAFTestFactory.read(0, 4096);
         if (!StringUtils.isEmpty(fats)) {
@@ -155,7 +155,7 @@ public class FATService {
             return FileSystemUtil.ERROR;
         } else {
             // 创建文件
-            File file = new File(fileName, path, index2);
+            File file = new File(fileName, path, index * 4096);
             myFAT[index2] = new FAT(FileSystemUtil.END, FileSystemUtil.FILE, index2, file);
             System.out.println("myFAT:" + JSON.toJSONString(myFAT).getBytes().length);
             RAFTestFactory.write(0, JSON.toJSONString(myFAT).getBytes());
@@ -438,7 +438,7 @@ public class FATService {
                 index = resultList.get(index).getIndex();
             } else {
 //				content = content + file.getContent();
-                content = content + RAFTestFactory.read(file.getDiskNum(), 64);
+                content = content + RAFTestFactory.read(file.getDiskNum(), 3000);
                 break;
             }
         }

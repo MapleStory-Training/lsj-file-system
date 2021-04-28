@@ -147,7 +147,7 @@ public class RAFTestFactory {
             RandomAccessFile r = RAFTestFactory.getRAFWithModelRW();
             r.setLength(size);
             r.close();
-            System.out.println("磁盘文件初始化完成");
+            System.out.println("***********" + "磁盘文件初始化完成" + "***********");
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("磁盘文件初始化异常：" + e);
