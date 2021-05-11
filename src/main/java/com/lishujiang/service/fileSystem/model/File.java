@@ -4,20 +4,54 @@ import java.util.Date;
 
 public class File {
 
-    //文件的目录项 占用8个字节
-    private String fileName; //字母、数字和除 $ . /   3个字节
-    private String type;//2个字节   类型
-    private int property;//1个字节  属性
-    private int diskNum;//1个字节 起始盘块号
-    private int length;//1个字节
-    private String content;//内容
+    /**
+     * 文件名称
+     */
+    private String fileName;
 
+    /**
+     * 文件类型
+     */
+    private String type;
 
-    //查看的属性
-    private String location; //位置
-    private int size;    //大小
-    private Date createTime; //创建时间
+    /**
+     * 属性
+     */
+    private int property;
 
+    /**
+     * 起始盘块号
+     */
+    private int diskNum;
+
+    /**
+     * 长度
+     */
+    private int length;
+
+    /**
+     * 内容
+     */
+    private String content;
+
+    /**
+     * 位置
+     */
+    private String location;
+
+    /**
+     * 大小
+     */
+    private int size;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
+    /**
+     * 是否只读
+     */
     private boolean isReadOnly;
 
     public File() {
@@ -107,14 +141,6 @@ public class File {
     public void setSize(int size) {
         this.size = size;
     }
-
-//	public String getSpace() {
-//		return space;
-//	}
-//
-//	public void setSpace(String space) {
-//		this.space = space;
-//	}
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;

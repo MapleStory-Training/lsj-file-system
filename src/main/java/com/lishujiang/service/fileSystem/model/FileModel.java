@@ -12,21 +12,43 @@ import java.util.Date;
 @Data
 public class FileModel {
 
-    private String fileName; //文件名或目录名
-    private String type; //文件类型:用来识别是文件还是目录
+    /**
+     * 文件名或目录名
+     */
+    private String fileName;
+
+    /**
+     * 文件类型:用来识别是文件还是目录
+     */
+    private String type;
+
     /**
      * 当前节点在FAT磁盘块中的起始位置
      */
     private Integer diskPosition;
-    private int size;    //文件的大小
-    private String location; //位置
-    private int diskNum;
-    private Date createTime; //创建时间
-    private int length;//1个字节
-    private String content;//内容
 
-    //文件的目录项 占用8个字节
-    private int property;//1个字节  属性
+    /**
+     * 文件的大小
+     */
+    private int size;
+
+    /**
+     * 位置
+     */
+    private String location;
+    private int diskNum;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+    private int length;
+    private String content;
+
+    /**
+     * 属性
+     */
+    private int property;
     private boolean isReadOnly;
 
     public FileModel(String fileName) {

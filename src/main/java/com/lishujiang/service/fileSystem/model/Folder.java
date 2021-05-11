@@ -7,23 +7,40 @@ import java.util.Date;
 
 @Data
 public class Folder implements Serializable {
-
-
+    /**
+     * 文件夹名称
+     */
     private String folderName;
+
+    /**
+     * 磁盘位置
+     */
     private int diskNum;
+
+    /**
+     * 类型
+     */
     private String type;
 
-    private boolean hasChild;
-    private int numOfFAT;
+    /**
+     * 位置
+     */
+    private String location;
 
-    //查看的属性
-    private String location; //位置
+    /**
+     * 位置
+     */
+    private String preLocation;
 
-    private String preLocation; //位置
+    /**
+     * 位置
+     */
+    private String aftLocation;
 
-    private String aftLocation; //位置
-
-    private Date createTime; //创建时间
+    /**
+     * 创建时间
+     */
+    private Date createTime;
 
     public Folder() {
     }
@@ -66,22 +83,6 @@ public class Folder implements Serializable {
 
     public void setDiskNum(int diskNum) {
         this.diskNum = diskNum;
-    }
-
-    public boolean isHasChild() {
-        return hasChild;
-    }
-
-    public void setHasChild(boolean hasChild) {
-        this.hasChild = hasChild;
-    }
-
-    public int getNumOfFAT() {
-        return numOfFAT;
-    }
-
-    public void setNumOfFAT(int numOfFAT) {
-        this.numOfFAT = numOfFAT;
     }
 
     public String getLocation() {
